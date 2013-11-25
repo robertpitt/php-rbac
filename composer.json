@@ -1,8 +1,7 @@
 {
 	"name": "pxl/php-rbac",
-	"version": "0.0.1",
 	"type": "library",
-	"description": "Role Based Access Control List Library",
+	"description": "Role Based Access Control library",
 	"keywords": ["database", "rbac"],
 	"homepage": "https://github.com/pxl/php-rbac",
 	"license" : "BSD",
@@ -15,7 +14,8 @@
 		{
 			"name": "George Boot",
 			"email": "gboot@pxl.nl",
-			"homepage": "http://www.pxl.nl"
+			"homepage": "http://www.pxl.nl",
+			"role": "Developer"
 		}
 	],
 	"autoload": {
@@ -24,7 +24,7 @@
 		}
 	},
 	"require": {
-		"php": ">=5.5.0",
+		"php": ">=5.4.0",
 		"maximebf/cachecache" : ">=1.0.0"
 	}
 }
