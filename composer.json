@@ -20,7 +20,7 @@
 	],
 	"autoload": {
 		"psr-0": {
-			"Rbac": "src/Rbac"
+			"Rbac": "src"
 		}
 	},
 	"require": {
