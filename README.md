@@ -10,7 +10,7 @@ CacheCache library (loaded via composer) if you want caching
 Usage
 =====
 
-```
+``` php
 // Create new rbac manager object
 $manager = new \Rbac\Manager($pdo);
 
