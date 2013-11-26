@@ -1,29 +1,42 @@
 <?php
+
 namespace Rbac\Collection;
 
-use Rbac\Manager,
-	Rbac\AbstractCollection,
-	Rbac\CollectionInterface;
+use Rbac\Manager;
+use Rbac\AbstractCollection;
+use Rbac\CollectionInterface;
 
 /**
+ * Class Tasks
+ *
  * This class loads all allowed tasks based on give, identity,
  * joining on the tables for roles and tasks.
+ *
+ * @package Rbac\Collection
  */
 class Tasks extends AbstractCollection implements CollectionInterface
 {
-	const ITEM_CLASS = '\\Rbac\\Task';
+    /**
+     * @type string
+     */
+    const ITEM_CLASS = '\\Rbac\\Task';
 
-	/** @var string */
+    /**
+     * @type string
+     */
 	protected $cacheKey = 'Rbac.Collection.Tasks.identity.';
 
-	/** @var int */
+    /**
+     * @type int
+     */
 	protected $cacheTtl = 120;
 
 	/**
-	 * Fetch all allowed operatations for user
-	 * @return array
-	 */
-	protected function getData()
+     * Fetch all allowed operatations for user
+     *
+     * @return array
+     */
+    protected function getData()
 	{
 		// Get results from cache if they exist
 		$this->manager->getCache() && $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);

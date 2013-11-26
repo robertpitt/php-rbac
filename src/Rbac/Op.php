@@ -1,7 +1,15 @@
 <?php
+
 namespace Rbac;
 
+/**
+ * Class Op
+ * @package Rbac
+ */
 class Op extends AbstractItem
 {
-	const TYPE = 'op';
+    /**
+     * @type string
+     */
+    const TYPE = 'op';
 }

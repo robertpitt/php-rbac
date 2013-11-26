@@ -1,25 +1,38 @@
 <?php
+
 namespace Rbac\Collection;
 
-use Rbac\Manager,
-	Rbac\AbstractCollection,
-	Rbac\CollectionInterface;
+use Rbac\Manager;
+use Rbac\AbstractCollection;
+use Rbac\CollectionInterface;
 
 /**
+ * Class Roles
+ *
  * This class loads all roles based on give identity
+ *
+ * @package Rbac\Collection
  */
 class Roles extends AbstractCollection implements CollectionInterface
 {
-	const ITEM_CLASS = '\\Rbac\\Role';
+    /**
+     * @type string
+     */
+    const ITEM_CLASS = '\\Rbac\\Role';
 
-	/** @var string */
+    /**
+     * @type string
+     */
 	protected $cacheKey = 'Rbac.Collection.Roles.identity.';
 
-	/** @var int */
+    /**
+     * @type int
+     */
 	protected $cacheTtl = 120;
 
 	/**
 	 * Fetch all allowed operatations for user
+     *
 	 * @return array
 	 */
 	protected function getData()
@@ -49,8 +62,10 @@ ORDER BY item_name ASC";
 
 	/**
 	 * Add user id to array of roles
+     *
 	 * @param int $id
 	 * @param array $roles
+     *
 	 * @return bool
 	 */
 	public function addUser($id, array $roles)

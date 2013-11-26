@@ -1,25 +1,39 @@
 <?php
+
 namespace Rbac;
 
+/**
+ * Class Manager
+ * @package Rbac
+ */
 class Manager
 {
-	/** @var \Pdo */
-	protected $conn;
+    /**
+     * @type \Pdo
+     */
+    protected $conn;
 
-	/** @var CacheCache\Cache */
-	protected $cache;
+    /**
+     * @type CacheCache\Cache
+     */
+    protected $cache;
 
-	/** @var bool */
-	protected $debug;
+    /**
+     * @type bool
+     */
+    protected $debug;
 
-	/** @var ops */
-	protected $ops;
+    /**
+     * @type ops
+     */
+    protected $ops;
 
-	/**
-	 * Constructor
-	 * @param PDO $conn
-	 */
-	public function __construct(\Pdo $conn)
+    /**
+     * The constructor of this class
+     *
+     * @param \Pdo $conn
+     */
+    public function __construct(\Pdo $conn)
 	{
 		$this->conn		= $conn;
 		$this->debug	= false;
@@ -27,10 +41,12 @@ class Manager
 
 	/**
 	 * Get/set pdo connection
-	 * @param \PDO $conn
-	 * @return \PDO
+     *
+	 * @param \Pdo $conn
+     *
+	 * @return \Pdo
 	 */
-	public function connection(\PDO $conn = null)
+	public function connection(\Pdo $conn = null)
 	{
 		null !== $conn && $this->conn = $conn;
 		return $this->conn;
@@ -38,7 +54,9 @@ class Manager
 
 	/**
 	 * Set/get debug flag
+     *
 	 * @param bool $debug
+     *
 	 * @return bool
 	 */
 	public function debug($debug = null)
@@ -48,11 +66,13 @@ class Manager
 	}
 
 	/**
-	 * Set the cache object
-	 * @param CacheCache\Cache
-	 * @return $this
-	 */
-	public function setCache(\CacheCache\Cache $cache)
+     * Set the cache object
+     *
+     * @param \CacheCache\Cache $cache
+     *
+     * @return \CacheCache\Cache
+     */
+    public function setCache(\CacheCache\Cache $cache)
 	{
 		$this->cache = $cache;
 		return $this->cache;
@@ -60,6 +80,7 @@ class Manager
 
 	/**
 	 * Return cache object
+     *
 	 * @return CacheCache\Cache
 	 */
 	public function getCache()
@@ -69,6 +90,7 @@ class Manager
 
 	/**
 	 * Clear cache object
+     *
 	 * @return $this
 	 */
 	public function clearCache()
@@ -79,8 +101,10 @@ class Manager
 
 	/**
 	 * Check if operation access is allowed
+     *
 	 * @param string $access
 	 * @param \Rbac\CollectionInterface $collection
+     *
 	 * @return bool
 	 */
 	public function isAllowed($access, CollectionInterface $collection)

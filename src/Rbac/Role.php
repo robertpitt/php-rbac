@@ -1,7 +1,15 @@
 <?php
+
 namespace Rbac;
 
+/**
+ * Class Role
+ * @package Rbac
+ */
 class Role extends AbstractItem
 {
-	const TYPE = 'role';
+    /**
+     * @type string
+     */
+    const TYPE = 'role';
 }

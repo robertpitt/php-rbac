@@ -1,26 +1,39 @@
 <?php
+
 namespace Rbac\Collection;
 
-use Rbac\Manager,
-	Rbac\AbstractCollection,
-	Rbac\CollectionInterface;
+use Rbac\Manager;
+use Rbac\AbstractCollection;
+use Rbac\CollectionInterface;
 
 /**
+ * Class Ops
+ *
  * This class loads all allowed operations based on give identity,
  * joining on the tables for roles and tasks.
+ *
+ * @package Rbac\Collection
  */
 class Ops extends AbstractCollection implements CollectionInterface
 {
-	const ITEM_CLASS = '\\Rbac\\Op';
+    /**
+     * @type string
+     */
+    const ITEM_CLASS = '\\Rbac\\Op';
 
-	/** @var string */
+    /**
+     * @type string
+     */
 	protected $cacheKey = 'Rbac.Collection.Ops.identity.';
 
-	/** @var int */
+    /**
+     * @type int
+     */
 	protected $cacheTtl = 120;
 
 	/**
 	 * Fetch all allowed operatations for user
+     *
 	 * @return array
 	 */
 	protected function getData()

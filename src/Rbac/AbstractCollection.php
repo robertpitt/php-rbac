@@ -1,13 +1,22 @@
 <?php
+
 namespace Rbac;
 
+/**
+ * Class AbstractCollection
+ * @package Rbac
+ */
 abstract class AbstractCollection
 {
-	/** @var int */
-	protected $identity;
+    /**
+     * @type int
+     */
+    protected $identity;
 
-	/** @var array */
-	protected $data;
+    /**
+     * @type array
+     */
+    protected $data;
 
 	/**
 	 * @{inherit}
@@ -55,8 +64,10 @@ abstract class AbstractCollection
 
 	/**
 	 * Loop through data rows and create array of item objects
+     *
 	 * @param string $itemClass
 	 * @param array $rows
+     *
 	 * @return array
 	 */
 	protected function parse($itemClass, array $rows = array())

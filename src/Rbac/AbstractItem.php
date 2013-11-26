@@ -1,19 +1,31 @@
 <?php
+
 namespace Rbac;
 
+/**
+ * Class AbstractItem
+ * @package Rbac
+ */
 abstract class AbstractItem
 {
-	/** @var int */
-	protected $id;
+    /**
+     * @type int
+     */
+    protected $id;
 
-	/** @var string */
-	protected $name;
+    /**
+     * @type string
+     */
+    protected $name;
 
-	/** @var string */
-	protected $description;
+    /**
+     * @type string
+     */
+    protected $description;
 
 	/**
 	 * Constructor
+     *
 	 * @param int $id
 	 * @param string $name
 	 * @param string $description
@@ -27,7 +39,9 @@ abstract class AbstractItem
 
 	/**
 	 * Get/set operation id
+     *
 	 * @param int $id
+     *
 	 * @return int
 	 */
 	public function id($id = null)
@@ -38,7 +52,9 @@ abstract class AbstractItem
 
 	/**
 	 * Get/set operation name
+     *
 	 * @param string $name
+     *
 	 * @return string
 	 */
 	public function name($name = null)
@@ -49,7 +65,9 @@ abstract class AbstractItem
 
 	/**
 	 * Get/set operation description
+     *
 	 * @param string $description
+     *
 	 * @return string
 	 */
 	public function description($description = null)
