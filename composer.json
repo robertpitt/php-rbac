@@ -25,6 +25,7 @@
 	},
 	"require": {
 		"php": ">=5.4.0",
-		"maximebf/cachecache" : ">=1.0.0"
+		"maximebf/cachecache" : ">=1.0.0",
+        "gabordemooij/redbean": ">=3.4.0"
 	}
 }

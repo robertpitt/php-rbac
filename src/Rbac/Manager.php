@@ -9,11 +9,6 @@ namespace Rbac;
 class Manager
 {
     /**
-     * @type \Pdo
-     */
-    protected $conn;
-
-    /**
      * @type CacheCache\Cache
      */
     protected $cache;
@@ -30,13 +25,10 @@ class Manager
 
     /**
      * The constructor of this class
-     *
-     * @param \Pdo $conn
      */
-    public function __construct(\Pdo $conn)
+    public function __construct()
 	{
-		$this->conn		= $conn;
-		$this->debug	= false;
+		$this->debug = false;
 	}
 
 	/**

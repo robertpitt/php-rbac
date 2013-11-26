@@ -5,6 +5,7 @@ namespace Rbac\Collection;
 use Rbac\Manager;
 use Rbac\AbstractCollection;
 use Rbac\CollectionInterface;
+use RedBean_Facade as R;
 
 /**
  * Class Roles
@@ -44,15 +45,18 @@ class Roles extends AbstractCollection implements CollectionInterface
 		}
 
 		// Nothing found in cache, or cached array is empty, lookup from db
-		$sql = "SELECT DISTINCT ar.name AS item_name, ar.id AS item_id, ar.description AS item_desc
-FROM acl_role ar
-JOIN acl_user_role aur ON (aur.role_id = ar.id)
-WHERE aur.user_id = ?
-ORDER BY item_name ASC";
-
-		$stmt = $this->manager->connection()->prepare($sql);
-		$stmt->execute(array($this->identity));
-		$rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $rows = R::getAll("
+          SELECT
+            DISTINCT `role`.`name` AS item_name,
+            `role`.`id` AS item_id,
+            `role`.`description` AS item_desc
+          FROM `role`
+          JOIN `role_user` ON (`role_user`.`role_id` = `role`.`id`)
+          WHERE `role_user`.`user_id` = :id
+          ORDER BY item_name ASC
+        ", [
+            ':id' => $this->identity
+        ]);
 
 		// Save to cache
 		$this->manager->getCache() && $this->manager->getCache()->set($this->cacheKey . $this->identity, $rows, $this->cacheTtl);

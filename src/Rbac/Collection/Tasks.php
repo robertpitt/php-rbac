@@ -5,6 +5,7 @@ namespace Rbac\Collection;
 use Rbac\Manager;
 use Rbac\AbstractCollection;
 use Rbac\CollectionInterface;
+use RedBean_Facade as R;
 
 /**
  * Class Tasks
@@ -45,18 +46,21 @@ class Tasks extends AbstractCollection implements CollectionInterface
 		}
 
 		// Nothing found in cache, or cached array is empty, lookup from db
-		$sql = "SELECT DISTINCT at.name AS item_name, at.id AS item_id, at.description AS item_desc
-FROM acl_task at
-JOIN acl_task_op ato ON (at.id = ato.task_id)
-JOIN acl_role_task art ON (ato.task_id = art.task_id)
-JOIN acl_role ar ON (ar.id = art.role_id)
-JOIN acl_user_role aur ON (aur.role_id = art.role_id)
-WHERE aur.user_id = ?
-ORDER BY item_name ASC";
-
-		$stmt = $this->manager->connection()->prepare($sql);
-		$stmt->execute(array($this->identity));
-		$rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $rows = R::getAll("
+          SELECT
+            DISTINCT `task`.`name` AS item_name,
+            `task`.`id` AS item_id,
+            `task`.`description` AS item_desc
+          FROM `task`
+          JOIN `operation_task` ON (`task`.`id` = `operation_task`.`task_id`)
+          JOIN `role_task` ON (`operation_task`.`task_id` = `role_task`.`task_id`)
+          JOIN `role` ON (`role`.`id` = `role_task`.`role_id`)
+          JOIN `role_user` ON (`role_user`.`role_id` = `role_task`.`role_id`)
+          WHERE `role_user`.`user_id` = ?
+          ORDER BY item_name ASC
+        ", [
+            ':id' => $this->identity
+        ]);
 
 		// Save to cache
 		$this->manager->getCache() && $this->manager->getCache()->set($this->cacheKey . $this->identity, $rows, $this->cacheTtl);
