@@ -41,7 +41,7 @@ class Tasks extends AbstractCollection implements CollectionInterface
 	{
 		// Get results from cache if they exist
 		$this->manager->getCache() && $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);
-		if (is_array($rows) && count($rows) > 0) {
+		if (isset($rows) && is_array($rows) && count($rows) > 0) {
 			return $this->parse(static::ITEM_CLASS, $rows);
 		}
 
