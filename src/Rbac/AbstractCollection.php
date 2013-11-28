@@ -75,7 +75,8 @@ abstract class AbstractCollection
 		$data = array();
 		foreach ($rows as $row) {
 			$item = new $itemClass($row['item_id'], $row['item_name'], $row['item_desc']);
-			$data[$item->name()] = $item;
+			//$data[$item->name()] = $item;
+            $data[$row['item_name']] = $item;
 		}
 
 		return $data;

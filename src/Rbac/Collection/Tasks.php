@@ -56,7 +56,7 @@ class Tasks extends AbstractCollection implements CollectionInterface
           JOIN `role_task` ON (`operation_task`.`task_id` = `role_task`.`task_id`)
           JOIN `role` ON (`role`.`id` = `role_task`.`role_id`)
           JOIN `role_user` ON (`role_user`.`role_id` = `role_task`.`role_id`)
-          WHERE `role_user`.`user_id` = ?
+          WHERE `role_user`.`user_id` = :id
           ORDER BY item_name ASC
         ", [
             ':id' => $this->identity
