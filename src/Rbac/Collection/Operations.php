@@ -8,14 +8,14 @@ use Rbac\CollectionInterface;
 use RedBean_Facade as R;
 
 /**
- * Class Ops
+ * Class Operations
  *
  * This class loads all allowed operations based on give identity,
  * joining on the tables for roles and tasks.
  *
  * @package Rbac\Collection
  */
-class Ops extends AbstractCollection implements CollectionInterface
+class Operations extends AbstractCollection implements CollectionInterface
 {
     /**
      * @type string
@@ -25,7 +25,7 @@ class Ops extends AbstractCollection implements CollectionInterface
     /**
      * @type string
      */
-	protected $cacheKey = 'Rbac.Collection.Ops.identity.';
+	protected $cacheKey = 'Rbac.Collection.Operations.identity.';
 
     /**
      * @type int
