@@ -47,16 +47,19 @@ class Operations extends AbstractCollection implements CollectionInterface
 	protected function getData()
 	{
 		// Get results from cache if they exist
-		$this->manager->getCache() && $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);
-		if (isset($rows) && is_array($rows) && count($rows) > 0)
+    if($this->manager->getCache())
     {
-      return $this->parse(static::ITEM_CLASS, $rows);
-		}
+      $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);
+      if (isset($rows) && is_array($rows) && count($rows) > 0)
+      {
+        return $this->parse(static::ITEM_CLASS, $rows);
+      }
+    }
 
     /**
      * Build the query
      */
-    $query = "
+    $sql = "
       SELECT
         DISTINCT
           operation.name        AS item_name,

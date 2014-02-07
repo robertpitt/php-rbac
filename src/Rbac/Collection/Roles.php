@@ -45,25 +45,33 @@ class Roles extends AbstractCollection implements CollectionInterface
 	 */
 	protected function getData()
 	{
-		// Get results from cache if they exist
-		$this->manager->getCache() && $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);
-		if (isset($rows) && is_array($rows) && count($rows) > 0) {
-			return $this->parse(static::ITEM_CLASS, $rows);
-		}
+    if($this->manager->getCache())
+    {
+      $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);
+      if (isset($rows) && is_array($rows) && count($rows) > 0)
+      {
+        return $this->parse(static::ITEM_CLASS, $rows);
+      }
+    }
 
 		// Nothing found in cache, or cached array is empty, lookup from db
-        $rows = R::getAll("
-          SELECT
-            DISTINCT `role`.`name` AS item_name,
-            `role`.`id` AS item_id,
-            `role`.`description` AS item_desc
-          FROM `role`
-          JOIN `role_user` ON (`role_user`.`role_id` = `role`.`id`)
-          WHERE `role_user`.`user_id` = :id
-          ORDER BY item_name ASC
-        ", [
-            ':id' => $this->identity
-        ]);
+        $sql = "
+        	SELECT
+            	DISTINCT
+            		role.name AS item_name,
+            		role.id AS item_id,
+            		role.description AS item_desc
+			FROM role
+			JOIN role_user ON (role_user.role_id = role.id)
+			WHERE role_user.user_id = :id
+			ORDER BY item_name ASC";
+
+		/**
+		 * Prepare the query for execution
+		 */
+		$statement = $this->manager->connection()->prepare($sql);
+		$statement->execute(array($this->identity));
+		$rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
 		// Save to cache
 		$this->manager->getCache() && $this->manager->getCache()->set($this->cacheKey . $this->identity, $rows, $this->cacheTtl);

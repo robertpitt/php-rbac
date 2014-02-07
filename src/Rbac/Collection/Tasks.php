@@ -50,27 +50,33 @@ class Tasks extends AbstractCollection implements CollectionInterface
   protected function getData()
 	{
 		// Get results from cache if they exist
-		$this->manager->getCache() && $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);
-		if (isset($rows) && is_array($rows) && count($rows) > 0) {
-			return $this->parse(static::ITEM_CLASS, $rows);
-		}
+    if($this->manager->getCache())
+    {
+      $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);
+      if (isset($rows) && is_array($rows) && count($rows) > 0)
+      {
+        return $this->parse(static::ITEM_CLASS, $rows);
+      }
+    }
 
 		// Nothing found in cache, or cached array is empty, lookup from db
-        $rows = R::getAll("
-          SELECT
-            DISTINCT `task`.`name` AS item_name,
-            `task`.`id` AS item_id,
-            `task`.`description` AS item_desc
-          FROM `task`
-          JOIN `operation_task` ON (`task`.`id` = `operation_task`.`task_id`)
-          JOIN `role_task` ON (`operation_task`.`task_id` = `role_task`.`task_id`)
-          JOIN `role` ON (`role`.`id` = `role_task`.`role_id`)
-          JOIN `role_user` ON (`role_user`.`role_id` = `role_task`.`role_id`)
-          WHERE `role_user`.`user_id` = :id
-          ORDER BY item_name ASC
-        ", [
-            ':id' => $this->identity
-        ]);
+    $sql = "
+      SELECT
+        DISTINCT
+          task.name AS item_name,
+          task.id AS item_id,
+          task.description AS item_desc
+      FROM task
+      JOIN operation_task ON (task.id = operation_task.task_id)
+      JOIN role_task ON (operation_task.task_id = role_task.task_id)
+      JOIN role ON (role.id = role_task.role_id)
+      JOIN role_user ON (role_user.role_id = role_task.role_id)
+      WHERE role_user.user_id = :id
+      ORDER BY item_name ASC";
+
+    $stmt = $this->manager->connection()->prepare($sql);
+    $stmt->execute(array($this->identity));
+    $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
 		// Save to cache
 		$this->manager->getCache() && $this->manager->getCache()->set($this->cacheKey . $this->identity, $rows, $this->cacheTtl);
