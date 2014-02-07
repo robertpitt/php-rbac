@@ -48,30 +48,38 @@ class Operations extends AbstractCollection implements CollectionInterface
 	{
 		// Get results from cache if they exist
 		$this->manager->getCache() && $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);
-		if (isset($rows) && is_array($rows) && count($rows) > 0) {
-			return $this->parse(static::ITEM_CLASS, $rows);
+		if (isset($rows) && is_array($rows) && count($rows) > 0)
+    {
+      return $this->parse(static::ITEM_CLASS, $rows);
 		}
 
-		// Nothing found in cache, or cached array is empty, lookup from db
-        $rows = R::getAll("
-          SELECT
-            DISTINCT `operation`.`name` AS item_name,
-            `operation`.`id` AS item_id,
-            `operation`.`description` AS item_desc
-          FROM `operation`
-          JOIN `operation_task` ON (`operation`.`id` = `operation_task`.`operation_id`)
-          JOIN `role_task` ON (`operation_task`.`task_id` = `role_task`.`task_id`)
-          JOIN `role` ON (`role`.`id` = `role_task`.`role_id`)
-          JOIN `role_user` ON (`role_user`.`role_id` = `role_task`.`role_id`)
-          WHERE `role_user`.`id` = :id
-          ORDER BY item_name ASC
-        ", [
-            ':id' => $this->identity
-        ]);
+    /**
+     * Build the query
+     */
+    $query = "
+      SELECT
+        DISTINCT
+          operation.name        AS item_name,
+          operation.id          AS item_id,
+          operation.description AS item_desc
+        FROM operation
+        JOIN operation_task ON (operation.id = operation_task.operation_id)
+        JOIN role_task ON (operation_task.task_id = role_task.task_id)
+        JOIN role ON (role.id = role_task.role_id)
+        JOIN role_user ON (role_user.role_id = role_task.role_id)
+        WHERE role_user.id = :id
+        ORDER BY item_name ASC
+    ";
+
+    /**
+     * Prepare the query for execution
+     */
+    $statement = $this->manager->connection()->prepare($sql);
+    $statement->execute(array($this->identity));
+    $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
 		// Save to cache
 		$this->manager->getCache() && $this->manager->getCache()->set($this->cacheKey . $this->identity, $rows, $this->cacheTtl);
-
 		return $this->parse(static::ITEM_CLASS, $rows);
 	}
 }
