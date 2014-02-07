@@ -60,15 +60,15 @@ class Operations extends AbstractCollection implements Rbac\Interfaces\Collectio
     $sql = "
       SELECT
         DISTINCT
-          operation.name        AS item_name,
-          operation.id          AS item_id,
-          operation.description AS item_desc
-        FROM operation
-        JOIN operation_task ON (operation.id = operation_task.operation_id)
-        JOIN role_task ON (operation_task.task_id = role_task.task_id)
-        JOIN role ON (role.id = role_task.role_id)
-        JOIN role_user ON (role_user.role_id = role_task.role_id)
-        WHERE role_user.id = :id
+          rbac_operation.name        AS item_name,
+          rbac_operation.id          AS item_id,
+          rbac_operation.description AS item_desc
+        FROM rbac_operation
+        JOIN rbac_operation_task ON (rbac_operation.id = rbac_operation_task.operation_id)
+        JOIN rbac_role_task ON (rbac_operation_task.task_id = rbac_role_task.task_id)
+        JOIN rbac_role ON (rbac_role.id = rbac_role_task.role_id)
+        JOIN rbac_role_user ON (rbac_role_user.role_id = rbac_role_task.role_id)
+        WHERE rbac_role_user.id = :id
         ORDER BY item_name ASC
     ";
 

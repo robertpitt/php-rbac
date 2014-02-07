@@ -43,26 +43,37 @@ class Roles extends AbstractCollection implements Rbac\Interfaces\Collection
 	 */
 	protected function getData()
 	{
-    if($this->manager->cache())
-    {
-      $rows = $this->manager->cache()->retrieve($this->cacheKey . $this->identity);
-      if (isset($rows) && is_array($rows) && count($rows) > 0)
-      {
-        return $this->parse(static::ITEM_CLASS, $rows);
-      }
-    }
+		if($this->manager->cache())
+		{
+			/**
+			 * Fetch the cache results
+			 * @var Array
+			 */
+			$rows = $this->manager->cache()->retrieve($this->cacheKey . $this->identity);
 
-		// Nothing found in cache, or cached array is empty, lookup from db
-        $sql = "
-        	SELECT
-            	DISTINCT
-            		role.name AS item_name,
-            		role.id AS item_id,
-            		role.description AS item_desc
-			FROM role
-			JOIN role_user ON (role_user.role_id = role.id)
-			WHERE role_user.user_id = :id
-			ORDER BY item_name ASC";
+			/**
+			 * Parse the cache if we have one.
+			 */
+			if (isset($rows) && is_array($rows) && count($rows) > 0)
+			{
+				return $this->parse(static::ITEM_CLASS, $rows);
+			}
+		}
+
+		/**
+		 * Nothing found in cache, or cached array is empty, lookup from db
+		 * @var string
+		 */
+		$sql = "
+			SELECT
+				DISTINCT
+					rbac_role.name AS item_name,
+					rbac_role.id AS item_id,
+					rbac_role.description AS item_desc
+				FROM rbac_role
+				JOIN rbac_role_user ON (rbac_role_user.role_id = rbac_role.id)
+				WHERE rbac_role_user.user_id = :id
+				ORDER BY item_name ASC";
 
 		/**
 		 * Prepare the query for execution
