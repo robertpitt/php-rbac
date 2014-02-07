@@ -15,92 +15,89 @@ namespace Rbac;
  */
 class Manager
 {
-    /**
-     * @type CacheCache\Cache
-     */
-    protected $cache;
+	/**
+	 * @type bool
+	 */
+	protected $debug = false;
 
-    /**
-     * @type bool
-     */
-    protected $debug;
+	/**
+	 * Cache Interface
+	 * @type Interfaces\Cache
+	 */
+	protected $cache;
 
-    /**
-     * @type ops
-     */
-    protected $ops;
+	/**
+	 * @type ops
+	 */
+	protected $ops;
 
-    /**
-     * The constructor of this class
-     */
-    public function __construct()
+	/**
+	 * PDO Connection
+	 * @var \Pdo
+	 */
+	protected $pdo;
+
+	/**
+	 * The constructor of this class
+	 * @param Pdo $connection PDO Connection
+	 */
+	public function __construct(\Pdo $connection)
 	{
-		$this->debug = false;
+		$this->connection($connection);
 	}
 
 	/**
 	 * Get/set pdo connection
-     *
-	 * @param \Pdo $conn
+	 * @param \Pdo $connection
 	 * @return \Pdo
 	 */
-	public function connection(\Pdo $conn = null)
+	public function connection(\Pdo $connection = null)
 	{
-		null !== $conn && $this->conn = $conn;
-		return $this->conn;
+		if($connection !== null)
+		{
+			$this->connection = $connection;
+		}
+
+		return $this->connection;
 	}
 
 	/**
 	 * Set/get debug flag
-     *
+	 *
 	 * @param bool $debug
 	 * @return bool
 	 */
 	public function debug($debug = null)
 	{
-		null !== $debug && $this->debug = (bool) $debug;
-		return (bool) $this->debug;
+		if($debug !== null)
+		{
+			$this->debug = (bool)$debug;
+		}
+
+		return $this->debug;
 	}
 
 	/**
-     * Set the cache object
-     *
-     * @param \CacheCache\Cache $cache
-     * @return \CacheCache\Cache
-     */
-    public function setCache(\CacheCache\Cache $cache)
-	{
-		$this->cache = $cache;
-		return $this->cache;
-	}
-
-	/**
-	 * Return cache object
-	 * @return CacheCache\Cache
+	 * Set the cache object
+	 * @param Interfaces\Cache $cache Cache Interface
 	 */
-	public function getCache()
+	public function cache(Interfaces\Cache $cache = null)
 	{
-		return $this->cache;
-	}
+		if($cache !== null)
+		{
+			$this->cache = $cache;
+		}
 
-	/**
-	 * Clear cache object
-	 * @return $this
-	 */
-	public function clearCache()
-	{
-		$this->cache = null;
-		return $this;
+		return $this->cache;
 	}
 
 	/**
 	 * Check if operation access is allowed
-     *
 	 * @param string $access
-	 * @param \Rbac\CollectionInterface $collection
+	 * @param \Rbac\Interfaces\Collection $collection
 	 * @return bool
 	 */
-	public function isAllowed($access, CollectionInterface $collection)
+	public function isAllowed($access, Interfaces\Collection $collection)
 	{
 		return $collection->isAllowed($access);
 	}

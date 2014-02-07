@@ -11,8 +11,6 @@ namespace Rbac\Collection;
 
 use Rbac\Manager;
 use Rbac\AbstractCollection;
-use Rbac\CollectionInterface;
-use RedBean_Facade as R;
 
 /**
  * Class Roles
@@ -21,7 +19,7 @@ use RedBean_Facade as R;
  *
  * @package Rbac\Collection
  */
-class Roles extends AbstractCollection implements CollectionInterface
+class Roles extends AbstractCollection implements Rbac\Interfaces\Collection
 {
     /**
      * @type string
@@ -45,9 +43,9 @@ class Roles extends AbstractCollection implements CollectionInterface
 	 */
 	protected function getData()
 	{
-    if($this->manager->getCache())
+    if($this->manager->cache())
     {
-      $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);
+      $rows = $this->manager->cache()->retrieve($this->cacheKey . $this->identity);
       if (isset($rows) && is_array($rows) && count($rows) > 0)
       {
         return $this->parse(static::ITEM_CLASS, $rows);
@@ -74,8 +72,7 @@ class Roles extends AbstractCollection implements CollectionInterface
 		$rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
 		// Save to cache
-		$this->manager->getCache() && $this->manager->getCache()->set($this->cacheKey . $this->identity, $rows, $this->cacheTtl);
-
+		$this->manager->cache() && $this->manager->cache()->store($this->cacheKey . $this->identity, $rows, $this->cacheTtl);
 		return $this->parse(static::ITEM_CLASS, $rows);
 	}
 

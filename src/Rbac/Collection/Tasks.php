@@ -14,8 +14,6 @@ namespace Rbac\Collection;
  */
 use Rbac\Manager;
 use Rbac\AbstractCollection;
-use Rbac\CollectionInterface;
-use RedBean_Facade as R;
 
 /**
  * Class Tasks
@@ -25,7 +23,7 @@ use RedBean_Facade as R;
  *
  * @package Rbac\Collection
  */
-class Tasks extends AbstractCollection implements CollectionInterface
+class Tasks extends AbstractCollection implements Rbac\Interfaces\Collection
 {
   /**
    * @type string

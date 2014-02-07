@@ -7,13 +7,13 @@
  * @author     George Boot <gboot@pxl.nl>
  * @author     Robert Pitt <rpitt@centiq.co.uk>
  */
-namespace Rbac;
+namespace Rbac\Interfaces;
 
 /**
- * Interface CollectionInterface
- * @package Rbac
+ * Collection Interface
+ * @package Rbac\Interfaces
  */
-interface CollectionInterface
+interface Collection
 {
 	/**
      * Constructor
