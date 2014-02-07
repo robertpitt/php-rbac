@@ -1,9 +1,9 @@
 {
-	"name": "pxl/php-rbac",
+	"name": "robertpitt/php-rbac",
 	"type": "library",
 	"description": "Role Based Access Control library",
 	"keywords": ["database", "rbac"],
-	"homepage": "https://github.com/pxl/php-rbac",
+	"homepage": "https://github.com/robertpitt/php-rbac",
 	"license" : "BSD",
 	"authors" : [
 		{
@@ -16,6 +16,12 @@
 			"email": "gboot@pxl.nl",
 			"homepage": "http://www.pxl.nl",
 			"role": "Developer"
+		},
+		{
+			"name": "Robert Pitt",
+			"email": "rpitt@centiq.co.uk",
+			"homepage": "https://centiq.co.uk",
+			"role": "Engineer"
 		}
 	],
 	"autoload": {
@@ -26,6 +32,6 @@
 	"require": {
 		"php": ">=5.4.0",
 		"maximebf/cachecache" : ">=1.0.0",
-        "gabordemooij/redbean": ">=3.4.0"
+		"gabordemooij/redbean": ">=3.4.0"
 	}
 }
