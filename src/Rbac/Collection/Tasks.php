@@ -1,7 +1,17 @@
 <?php
-
+/**
+ * Task Collection
+ *
+ * @package    Rbac\Collection
+ * @author     Brandon Lamb <brandon@brandonlamb.com>
+ * @author     George Boot <gboot@pxl.nl>
+ * @author     Robert Pitt <rpitt@centiq.co.uk>
+ */
 namespace Rbac\Collection;
 
+/**
+ * Import namespaces
+ */
 use Rbac\Manager;
 use Rbac\AbstractCollection;
 use Rbac\CollectionInterface;
@@ -17,27 +27,27 @@ use RedBean_Facade as R;
  */
 class Tasks extends AbstractCollection implements CollectionInterface
 {
-    /**
-     * @type string
-     */
-    const ITEM_CLASS = '\\Rbac\\Task';
+  /**
+   * @type string
+   */
+  const ITEM_CLASS = '\\Rbac\\Task';
 
-    /**
-     * @type string
-     */
+  /**
+   * @type string
+   */
 	protected $cacheKey = 'Rbac.Collection.Tasks.identity.';
 
-    /**
-     * @type int
-     */
+  /**
+   * @type int
+   */
 	protected $cacheTtl = 120;
 
 	/**
-     * Fetch all allowed operatations for user
-     *
-     * @return array
-     */
-    protected function getData()
+   * Fetch all allowed operatations for user
+   *
+   * @return array
+   */
+  protected function getData()
 	{
 		// Get results from cache if they exist
 		$this->manager->getCache() && $rows = $this->manager->getCache()->get($this->cacheKey . $this->identity);

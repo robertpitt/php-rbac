@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Class Manager
+ *
+ * @package    Rbac
+ * @author     Brandon Lamb <brandon@brandonlamb.com>
+ * @author     George Boot <gboot@pxl.nl>
+ * @author     Robert Pitt <rpitt@centiq.co.uk>
+ */
 namespace Rbac;
 
 /**
@@ -35,7 +42,6 @@ class Manager
 	 * Get/set pdo connection
      *
 	 * @param \Pdo $conn
-     *
 	 * @return \Pdo
 	 */
 	public function connection(\Pdo $conn = null)
@@ -48,7 +54,6 @@ class Manager
 	 * Set/get debug flag
      *
 	 * @param bool $debug
-     *
 	 * @return bool
 	 */
 	public function debug($debug = null)
@@ -61,7 +66,6 @@ class Manager
      * Set the cache object
      *
      * @param \CacheCache\Cache $cache
-     *
      * @return \CacheCache\Cache
      */
     public function setCache(\CacheCache\Cache $cache)
@@ -72,7 +76,6 @@ class Manager
 
 	/**
 	 * Return cache object
-     *
 	 * @return CacheCache\Cache
 	 */
 	public function getCache()
@@ -82,7 +85,6 @@ class Manager
 
 	/**
 	 * Clear cache object
-     *
 	 * @return $this
 	 */
 	public function clearCache()
@@ -96,7 +98,6 @@ class Manager
      *
 	 * @param string $access
 	 * @param \Rbac\CollectionInterface $collection
-     *
 	 * @return bool
 	 */
 	public function isAllowed($access, CollectionInterface $collection)

@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Roles Collection
+ *
+ * @package    Rbac\Collection
+ * @author     Brandon Lamb <brandon@brandonlamb.com>
+ * @author     George Boot <gboot@pxl.nl>
+ * @author     Robert Pitt <rpitt@centiq.co.uk>
+ */
 namespace Rbac\Collection;
 
 use Rbac\Manager;

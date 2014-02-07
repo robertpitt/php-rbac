@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Class Op
+ *
+ * @package    Rbac
+ * @author     Brandon Lamb <brandon@brandonlamb.com>
+ * @author     George Boot <gboot@pxl.nl>
+ * @author     Robert Pitt <rpitt@centiq.co.uk>
+ */
 namespace Rbac;
 
 /**

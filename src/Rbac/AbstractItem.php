@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Abstract Item class
+ *
+ * @package    Rbac
+ * @author     Brandon Lamb <brandon@brandonlamb.com>
+ * @author     George Boot <gboot@pxl.nl>
+ * @author     Robert Pitt <rpitt@centiq.co.uk>
+ */
 namespace Rbac;
 
 /**
@@ -41,7 +48,6 @@ abstract class AbstractItem
 	 * Get/set operation id
      *
 	 * @param int $id
-     *
 	 * @return int
 	 */
 	public function id($id = null)
@@ -54,7 +60,6 @@ abstract class AbstractItem
 	 * Get/set operation name
      *
 	 * @param string $name
-     *
 	 * @return string
 	 */
 	public function name($name = null)
@@ -67,7 +72,6 @@ abstract class AbstractItem
 	 * Get/set operation description
      *
 	 * @param string $description
-     *
 	 * @return string
 	 */
 	public function description($description = null)

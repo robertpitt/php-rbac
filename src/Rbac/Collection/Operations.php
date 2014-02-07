@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Operations Collection
+ *
+ * @package    Rbac\Collection
+ * @author     Brandon Lamb <brandon@brandonlamb.com>
+ * @author     George Boot <gboot@pxl.nl>
+ * @author     Robert Pitt <rpitt@centiq.co.uk>
+ */
 namespace Rbac\Collection;
 
 use Rbac\Manager;
@@ -17,10 +24,10 @@ use RedBean_Facade as R;
  */
 class Operations extends AbstractCollection implements CollectionInterface
 {
-    /**
-     * @type string
-     */
-    const ITEM_CLASS = '\\Rbac\\Op';
+  /**
+   * @type string
+   */
+  const ITEM_CLASS = '\\Rbac\\Op';
 
     /**
      * @type string
@@ -34,7 +41,7 @@ class Operations extends AbstractCollection implements CollectionInterface
 
 	/**
 	 * Fetch all allowed operatations for user
-     *
+   *
 	 * @return array
 	 */
 	protected function getData()
